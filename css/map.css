@@ -1,0 +1,74 @@
+.card {
+    border: 3px solid #ec6159;
+    width: fit-content;
+    border-radius: 10px;
+    padding: 5px 25px;
+    margin: auto;
+}
+
+#countdown {
+    font-size: 22px;
+}
+
+.waiting_section {
+    text-align: center;
+    width: max-content;
+    margin: auto;
+}
+
+.your_code {
+    display: none;
+    text-align: center;
+    width: max-content;
+    margin: auto;
+}
+
+.your_code form {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+}
+
+.your_code form .add_name {
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.your_code form .submit {
+    margin: auto;
+    border-radius: 15px;
+    width: max-content;
+    background-color: #2baae1;
+}
+
+.plugin-data p,
+.your_code p {
+    text-transform: uppercase;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.your_code p.code {
+    border: 3px solid #000;
+    border-radius: 10px;
+    padding: 5px 25px;
+    width: max-content;
+    margin: 10px auto;
+}
+
+.progress-text {
+    color: #fff;
+    margin: auto;
+    font-weight: bold;
+}
+
+.progress {
+    height: 2.5rem !important;
+    border: 3px solid #ec6159;
+    padding: 5px;
+    border-radius: 15px !important;
+}
+
+.progress-bar {
+    border-radius: 10px !important;
+}

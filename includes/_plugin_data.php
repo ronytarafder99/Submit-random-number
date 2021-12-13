@@ -89,7 +89,7 @@ $load_time = $timer * 1000;
                     type: 'POST',
                     url: "<?php echo admin_url('admin-ajax.php'); ?>",
                     data: {
-                        action: "savedata",
+                        action: "wesoftpress_savedata",
                         MyUrlName: name
                     },
 

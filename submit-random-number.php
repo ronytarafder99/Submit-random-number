@@ -82,6 +82,7 @@ register_activation_hook( __FILE__, 'wesoftpress_jal_install' );
 register_activation_hook( __FILE__, 'wesoftpress_jal_install_data' );
 
 include(plugin_dir_path(__FILE__) . 'includes/register_page.php');
+include(plugin_dir_path(__FILE__) . 'includes/meta_box.php');
 
 function wesoftpress_savedata(){
     $name = $_POST['MyUrlName'];

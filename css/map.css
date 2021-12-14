@@ -16,6 +16,12 @@
     font-size: 22px;
 }
 
+.success-page{
+    display: none;
+    text-align: center;
+    width: max-content;
+    margin: auto;
+}
 .waiting_section {
     text-align: center;
     width: max-content;
@@ -28,6 +34,38 @@
     width: max-content;
     margin: auto;
 }
+
+.success-page .svg {
+    margin: auto;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    background-color: #2baae1;
+    border-radius: 50%;
+}
+
+.success-page .svg svg {
+    fill: #fff;
+    margin: auto;
+    width: 2rem;
+    height: 2rem;
+}
+
+.success-page .para {
+    font-size: 15px;
+    font-weight: normal;
+    text-transform: capitalize;
+}
+
+.success-page a.continue {
+    display: block;
+    padding: 5px 15px;
+    color: #fff;
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 15px;
+}
+
 
 .your_code form {
     display: flex;

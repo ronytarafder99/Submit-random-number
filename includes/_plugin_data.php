@@ -20,9 +20,34 @@
             <input type="button" name="submit" id="MyUrlsubmit" value="Submit" class="submit">
         </form>
     </div>
+    
+    <div class="success-page">
+    <div class="svg">
+    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="78.369px" height="78.369px" viewBox="0 0 78.369 78.369" style="enable-background:new 0 0 78.369 78.369;"
+            xml:space="preserve">
+        <g>
+            <path d="M78.049,19.015L29.458,67.606c-0.428,0.428-1.121,0.428-1.548,0L0.32,40.015c-0.427-0.426-0.427-1.119,0-1.547l6.704-6.704
+                c0.428-0.427,1.121-0.427,1.548,0l20.113,20.112l41.113-41.113c0.429-0.427,1.12-0.427,1.548,0l6.703,6.704
+                C78.477,17.894,78.477,18.586,78.049,19.015z"/>
+        </g>
+        </svg>
+    </div>
+    <p class="success">success</p>
+    <p class="para">Everything Working Fine</p>
+    <?php
+    global $post;
+    if(is_single( )){ ?>
+        <a class="continue" href="<?php echo get_post_meta($post->ID,  'post_reading_time', true); ?>">Contunie</a>
+    <?php }else{ ?>
+        <a class="continue" href="<?php bloginfo( 'url' ); ?>">Contunie</a>
+   <?php } ?>
+
+    </div>
+
 </div>
 
-<?php  
+<?php
 $timer = get_option('map_title');
 if(!$timer){
     $timer = '60';
@@ -102,7 +127,9 @@ wp_enqueue_script('jQuery');
                     },
 
                     success: function (data) {
-                        document.getElementById("msg").innerHTML = `<div class="alert alert-success" role="alert">Success</div>`;
+                        // document.getElementById("msg").innerHTML = `<div class="alert alert-success" role="alert">Success</div>`;
+                        jQuery('.your_code').css({'display': 'none'});
+                        jQuery('.success-page').css({'display': 'block'});
                     }
                 });
             } else {

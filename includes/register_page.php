@@ -73,7 +73,7 @@ function wps_theme_func_settings()
     ?>
 <div class="wrap">
     <div id="icon-users" class="icon32"></div>
-    <h2>Example List Table Page</h2>
+    <h2>Random Number List Table Page</h2>
     <?php $exampleListTable->display(); ?>
 </div>
 <?php

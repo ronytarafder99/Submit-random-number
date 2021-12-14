@@ -9,10 +9,12 @@
                 <div class="progress-text"></div>
             </div>
         </div>
+        <p class="love-loding">love loading</p>
     </div>
     <div class="your_code">
         <p>Your Code</p>
         <p class="code" id="code"></p>
+        <p id="msg"></p>
         <form>
             <input name="MyUrlName" type="text" class="add_name" id="MyUrlName" placeholder="Enter Code">
             <input type="button" name="submit" id="MyUrlsubmit" value="Submit" class="submit">
@@ -59,15 +61,17 @@ wp_enqueue_script('jQuery');
 
     startTimer(<?php echo $timer; ?>);
 
-    let percent = 0
 
+    let percent = 0
     let timer = setInterval(function () {
-        percent += 1
+        if(jQuery("#countdown").text()){
+            percent += 1
         jQuery('.progress-text').text(`${percent} %`)
         jQuery('.bar').css('width', `${percent}%`)
 
         if (percent >= 100) {
             clearInterval(timer)
+        }
         }
     }, <?php echo $load_time; ?> / 100)
 
@@ -98,11 +102,11 @@ wp_enqueue_script('jQuery');
                     },
 
                     success: function (data) {
-                        alert('success');
+                        document.getElementById("msg").innerHTML = `<div class="alert alert-success" role="alert">Success</div>`;
                     }
                 });
             } else {
-                alert('Not match');
+                document.getElementById("msg").innerHTML = `<div class="alert alert-danger" role="alert">Error !</div>`;
             }
         });
     });

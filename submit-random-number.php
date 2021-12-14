@@ -106,8 +106,8 @@ add_action('wp_ajax_wesoftpress_savedata', 'wesoftpress_savedata');
 
 function wesoftpress_plugin_styles()
 {
-    wp_enqueue_style('map',  plugin_dir_url(__FILE__) . '/css/map.css');
-    wp_enqueue_style('bootstrap',  plugin_dir_url(__FILE__) . '/css/bootstrap.css');
+    wp_enqueue_style('map',  plugin_dir_url(__FILE__) . './css/map.css');
+    wp_enqueue_style('bootstrap',  plugin_dir_url(__FILE__) . './css/bootstrap.css');
 }
 add_action('wp_enqueue_scripts', 'wesoftpress_plugin_styles');
 

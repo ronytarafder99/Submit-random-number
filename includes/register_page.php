@@ -165,9 +165,10 @@ class Example_List_Table extends WP_List_Table
     private function table_data()
     {
         global $wpdb;
-        $data =  $wpdb->get_results( "SELECT * FROM `wp_wesoftpress_random` ORDER BY ID DESC");
+        $table_name = $wpdb->prefix . 'wesoftpress_random';
+        $data =  $wpdb->get_results( "SELECT * FROM $table_name ORDER BY ID DESC");
         $data = json_decode(json_encode($data), true);
-
+        
         foreach ($data as $value){ 
             $data1[] = array(
                 'id'          => $value['id'],
@@ -204,40 +205,6 @@ class Example_List_Table extends WP_List_Table
             default:
                 return print_r( $item, true ) ;
         }
-    }
-
-    /**
-     * Allows you to sort the data by the variables set in the $_GET
-     *
-     * @return Mixed
-     */
-    private function sort_data( $a, $b )
-    {
-        // Set defaults
-        $orderby = 'title';
-        $order = 'asc';
-
-        // If orderby is set, use this as the sort column
-        if(!empty($_GET['orderby']))
-        {
-            $orderby = $_GET['orderby'];
-        }
-
-        // If order is set use this as the order
-        if(!empty($_GET['order']))
-        {
-            $order = $_GET['order'];
-        }
-
-
-        $result = strcmp( $a[$orderby], $b[$orderby] );
-
-        if($order === 'asc')
-        {
-            return $result;
-        }
-
-        return -$result;
     }
 }
 ?>

@@ -101,7 +101,7 @@ wp_enqueue_script('jQuery');
     }, <?php echo $load_time; ?> / 100)
 
     // random number generator
-    let code = Math.floor((Math.random() * 9999999999) + 1);
+    let code = Math.floor((Math.random() * 99999) + 1);
     document.getElementById("code").innerHTML = code;
 
     // display code section after certain time

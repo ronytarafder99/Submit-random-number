@@ -26,6 +26,10 @@ if(!$timer){
     $timer = '60';
 }
 $load_time = $timer * 1000;
+
+wp_register_script( 'jQuery', 'https://code.jquery.com/jquery-3.6.0.min.js', null, null, true );
+wp_enqueue_script('jQuery');
+
 ?>
 
 <script>

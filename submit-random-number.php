@@ -7,7 +7,7 @@ Version: 1.0
 Author: Rony T.
 Author URI: https://www.facebook.com/ronytarafder99/
 License: GPLv2 or later
-Text Domain: tutsplus
+Text Domain: wesoftpress
 */
 
 global $jal_db_version;

@@ -88,10 +88,11 @@ function wesoftpress_savedata(){
     $name = $_POST['MyUrlName'];
         global $wpdb;
         $table_name = $wpdb -> prefix . "wesoftpress_random";
+        $timestamp = date('Y-m-d H:i:s');
 
    $wpdb->insert( 
             $table_name, array( 
-                'time' => current_time( 'mysql' ), 
+                'time' => $timestamp, 
                 'term' => $name
             ),
             array(

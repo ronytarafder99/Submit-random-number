@@ -66,15 +66,17 @@ function wps_theme_func_faq()
 </div>
 <?php }
 
-function wps_theme_func_settings()
-{
-    $exampleListTable = new Example_List_Table();
-    $exampleListTable->prepare_items();
-    ?>
+function wps_theme_func_settings(){ ?>
 <div class="wrap">
     <div id="icon-users" class="icon32"></div>
     <h2>Random Number List Table Page</h2>
-    <?php $exampleListTable->display(); ?>
+    <?php
+        $exampleListTable = new Example_List_Table();
+        $exampleListTable->prepare_items();
+        $exampleListTable->display_search_box();
+        $exampleListTable->load_notices();
+        $exampleListTable->display(); 
+        ?>
 </div>
 <?php
 }
@@ -103,6 +105,12 @@ class Example_List_Table extends WP_List_Table
         $data = $this->table_data();
         usort( $data, array( &$this, 'sort_data' ) );
 
+        $this->process_bulk_action();
+
+        $paged = isset($_REQUEST['paged']) ? ($per_page * max(0, intval($_REQUEST['paged']) - 1)) : 0;
+        $orderby = (isset($_REQUEST['orderby']) && in_array($_REQUEST['orderby'], array_keys($this->get_sortable_columns()))) ? $_REQUEST['orderby'] : 'id';
+        $order = (isset($_REQUEST['order']) && in_array($_REQUEST['order'], array('asc', 'desc'))) ? $_REQUEST['order'] : 'asc';
+
         $perPage = 20;
         $currentPage = $this->get_pagenum();
         $totalItems = count($data);
@@ -123,9 +131,12 @@ class Example_List_Table extends WP_List_Table
      *
      * @return Array
      */
+
+
     public function get_columns()
     {
         $columns = array(
+            'cb'               => '<input type="checkbox" />',
             'id'          => 'ID',
             'title'       => 'Number',
             // 'description' => 'Description',
@@ -137,6 +148,56 @@ class Example_List_Table extends WP_List_Table
         return $columns;
     }
 
+    public function column_id( $item ) {
+        $actions = array(
+            'delete' => sprintf( '<a href="?page=%s&action=%s&search-term=%s">' . __( 'Delete', 'search-analytics' ) . '</a>', $_REQUEST['page'], 'delete', $item['id'] ),
+            'view'   => sprintf( '<a href="?page=%s&search-term=%s">' . __( 'View Details', 'search-analytics' ) . '</a>', $_REQUEST['page'], $item['id'] )
+        );
+
+        return sprintf( '<a href="?page=%1$s&search-term=%2$s">%2$s</a> %4$s', $_REQUEST['page'], $item['id'], $item['term'], $this->row_actions( $actions ) );
+    }
+
+    public function column_cb( $item ) {
+        return sprintf(
+            '<input type="checkbox" name="search-term[]" value="%s" />', $item['id']
+        );
+    }
+
+    function get_bulk_actions() {
+        return array(
+            'delete' => __( 'Delete', 'search-analytics' )
+        );
+    }
+
+    function process_bulk_action() {
+        global $wpdb;
+
+        if ( 'delete' === $this->current_action() && ! empty( $_GET['search-term'] ) ) {
+            $table_name = $wpdb->prefix . 'wesoftpress_random';
+            $terms_to_delete = (array) $_GET['search-term'];
+            $terms_placeholders = implode( ',', array_fill( 0, count( $terms_to_delete ), '%d' ) );
+
+            $wpdb->query(
+                  $wpdb->prepare(
+                        "DELETE FROM $table_name WHERE id IN ($terms_placeholders)",
+                      $terms_to_delete
+                  )
+            );
+
+            wp_die( sprintf( '%s <a href="%s">%s</a>',
+                    __( 'Items deleted!', 'search-analytics' ),
+                    add_query_arg( 'result', 'deleted', remove_query_arg( array(
+                        'action',
+                        'search-term'
+                    ) ) ),
+                    __( 'Go Back!', 'search-analytics' )
+                )
+            );
+        }
+
+    }
+
+    
     /**
      * Define which columns are hidden
      *
@@ -154,7 +215,12 @@ class Example_List_Table extends WP_List_Table
      */
     public function get_sortable_columns()
     {
-        return array('title' => array('title', false));
+        $sortable_columns = array(
+            'title' => array('title', true),
+            'id' => array('id', false),
+            'year' => array('year', false),
+        );
+        return $sortable_columns;
     }
 
     /**
@@ -191,8 +257,7 @@ class Example_List_Table extends WP_List_Table
      *
      * @return Mixed
      */
-    public function column_default( $item, $column_name )
-    {
+    public function column_default( $item, $column_name ){
         switch( $column_name ) {
             case 'id':
             case 'title':
@@ -206,5 +271,16 @@ class Example_List_Table extends WP_List_Table
                 return print_r( $item, true ) ;
         }
     }
+
+    public function load_notices() {
+        if ( isset( $_GET['result'] ) && $_GET['result'] == 'deleted' ) {
+            ?>
+            <div class="notice updated mwtsa-notice is-dismissible">
+                <p><?php _e( 'Search term(s) successfully deleted', 'search-analytics' ); ?></p>
+            </div>
+            <?php
+        }
+    }
+
 }
 ?>

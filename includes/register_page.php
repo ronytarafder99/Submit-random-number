@@ -284,6 +284,7 @@ class we_Table_Example_List_Table extends WP_List_Table
         // notice that last argument is ARRAY_A, so we will retrieve array
 
         if( ! empty( $_REQUEST['s'] ) ){
+            $search = esc_sql( $_REQUEST['s'] );
             $this->items = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_name WHERE term LIKE '%{$search}%' OR id LIKE '%{$search}%'", $per_page, $paged), ARRAY_A);
         }else{
             $this->items = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_name ORDER BY $orderby $order LIMIT %d OFFSET %d", $per_page, $paged), ARRAY_A);
